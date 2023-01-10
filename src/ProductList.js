@@ -1,5 +1,6 @@
 import React from 'react';
 import Product from './Product';
+import { connect } from 'react-redux';
 
 function ProductList({ products }) {
   return (
@@ -11,4 +12,10 @@ function ProductList({ products }) {
   );
 }
 
-export default ProductList;
+function mapStateToProps(state) {
+  return {
+    products: state.products
+  }
+}
+
+export default connect(mapStateToProps)(ProductList);
