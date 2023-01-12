@@ -1,5 +1,4 @@
-import ProductList from './components/ProductList';
-import Product from './components/Product';
+import { SaleProductList } from './components/SaleDecorator';
 
 
 const products = [
@@ -10,11 +9,7 @@ const products = [
 
 function App() {
         return (
-                <ProductList products={products} render={(products) => {
-                        return products.map((product) => {
-                                return <Product key={product.id} name={product.name} price={product.price} imageUrl={product.imageUrl} />;
-                        });
-                } } />
+                <SaleProductList products={products} saleDiscount={20} />
         );
 }
 

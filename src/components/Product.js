@@ -1,14 +1,12 @@
-import React from 'react';
 
-const Product = (props) => {
-    return (
+const Product = ({ name, price, salePrice, imageUrl }) => (
+
         <div>
-            <h2>{props.name}</h2>
-            <img src={props.imageUrl} alt={props.name} />
-            <p>Price: {props.price}</p>
-            <button>buy</button>
+          <h2>{name}</h2>
+          <p>Price: {price}</p>
+          {salePrice && <p>Sale Price: {salePrice}</p>}
+          <img src={imageUrl} alt={name} />
         </div>
-    );
-}
+      );
 
-export default Product;
+      export default Product

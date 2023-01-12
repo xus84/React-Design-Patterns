@@ -1,52 +1,60 @@
-import React from 'react'
 import Product from './Product'
-import AddProductCommand from './AddProductCommand';
-import UpdateProductCommand from './UpdateProductCommand';
-import DeleteProductCommand from './DeleteProductCommand';
 
-export default class ProductList extends React.Component {
-        state = {
-            products: [
-                { id: 1, name: 'Product 1', price: '$10', imageUrl: 'product1.jpg' },
-                { id: 2, name: 'Product 2', price: '$20', imageUrl: 'product2.jpg' },
-                { id: 3, name: 'Product 3', price: '$30', imageUrl: 'product3.jpg' },
-            ],
-            commandHistory: []
+export const ProductList = ({ products }) => (
+        <div>
+          {products.map(product => (
+            <Product
+              key={product.id} 
+              name={product.name}
+              price={product.price}
+              imageUrl={product.imageUrl}
+            />
+          ))}
+        </div>
+      );
+      
+    
+  export  class ProductDecorator {
+        constructor(product) {
+            this.product = product;
         }
     
-        addProduct = (product) => {
-            const command = new AddProductCommand(product);
-            command.execute(this.state);
-            this.setState({ products: this.state.products, commandHistory: [...this.state.commandHistory, command] });
+        get id() {
+            return this.product.id;
         }
     
-        updateProduct = (product) => {
-            const command = new UpdateProductCommand(product);
-            command.execute(this.state);
-            this.setState({ products: this.state.products, commandHistory: [...this.state.commandHistory, command] });
+        get name() {
+            return this.product.name;
         }
     
-        deleteProduct = (productId) => {
-            const command = new DeleteProductCommand(productId);
-            command.execute(this.state);
-            this.setState({ products: this.state.products, commandHistory: [...this.state.commandHistory, command] });
+        get price() {
+            return this.product.price;
         }
     
-        undo = () => {
-            const lastCommand = this.state.commandHistory.pop();
-            lastCommand.undo(this.state);
-            this.setState({ products: this.state.products, commandHistory: this.state.commandHistory });
+        get imageUrl() {
+            return this.product.imageUrl;
+        }
+    }
+    
+ export   class ProductWithDiscount extends ProductDecorator {
+        constructor(product, discount) {
+            super(product);
+            this.discount = discount;
         }
     
-        render() {
-            return (
-                <div>
-                    <button onClick={() => this.undo()}>Undo</button>
-                    {this.state.products.map((product) => {
-                        return <Product key={product.id} product={product} onUpdate={this.updateProduct} onDelete={this.deleteProduct}/>
-                    })}
-                </div>
-            );
+        get price() {
+            return `${super.price} (Discount: ${this.discount})`;
+        }
+    }
+    
+ export   class ProductWithTax extends ProductDecorator {
+        constructor(product, tax) {
+            super(product);
+            this.tax = tax;
+        }
+    
+        get price() {
+            return `${super.price} (Tax: ${this.tax})`;
         }
     }
     
