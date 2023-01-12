@@ -1,14 +1,14 @@
 import React from 'react';
 import Product from './Product';
 
-function ProductList({ products }) {
-  return (
-    <div className="product-list">
-      {products.map(product => (
-        <Product key={product.id} product={product} />
-      ))}
-    </div>
-  );
+const ListProjects = (props) => {
+    return (
+        <div>
+            {props.products.map((product) => {
+                return <Product key={product.id} name={product.name} price={product.price} imageUrl={product.imageUrl} />
+            })}
+        </div>
+    );
 }
 
-export default ProductList;
+export default ListProjects;

@@ -1,14 +1,13 @@
 import React from 'react';
 
-function Product({ product }) {
-  return (
-    <div className="product">
-      <img src={product.imageUrl} alt={product.name} />
-      <h2>{product.name}</h2>
-      <p>{product.price}</p>
-      <button>Add to cart</button>
-    </div>
-  );
+const Product = (props) => {
+    return (
+        <div>
+            <h2>{props.name}</h2>
+            <img src={props.imageUrl} alt={props.name} />
+            <p>Price: {props.price}</p>
+        </div>
+    );
 }
 
 export default Product;
